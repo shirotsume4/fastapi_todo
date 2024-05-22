@@ -1,14 +1,17 @@
 from fastapi import APIRouter
-
+from typing import List
+from api.schemas import task as task_schema
+from api.cruds import task as task_crud
 router = APIRouter()
 
-@router.get("/tasks")
+@router.get("/tasks", response_model=List[task_schema.Task])
 def get_tasks():
-    return [{"id": 1, "name": "task 1", "status": "todo"}]
+    return task_crud.get_tasks()
+
 
 @router.post("/tasks")
-def create_task():
-    pass
+def create_task(task_body: task_schema.TaskCreate):
+    return task_crud.create_task(task_body)
 
 @router.put("/tasks/{task_id}/todo")
 def task_todo(task_id: int):
