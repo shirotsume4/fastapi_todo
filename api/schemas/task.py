@@ -7,8 +7,12 @@ class Task(BaseModel):
     title: str = Field(None, example="クリーニング")
     description: Optional[str] = Field(None, example="クリーニングを取りに行く")
     status: Literal["todo", "doing", "done"] = Field(None, description="現在の状態")
+    class Config:
+        orm_mode = True
     
 class TaskCreate(BaseModel):
     title: str = Field(None, example="クリーニング")
     description: Optional[str] = Field(None, example="クリーニングを取りに行く")
     # statusはtodoからスタート
+    class Config:
+        orm_mode = True
