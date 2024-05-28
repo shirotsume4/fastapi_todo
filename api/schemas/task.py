@@ -2,17 +2,23 @@ from typing import Optional, Literal
 
 from pydantic import BaseModel, Field
 
-class Task(BaseModel):
-    id: int
+class TaskBase(BaseModel):
     title: str = Field(None, example="クリーニング")
     description: Optional[str] = Field(None, example="クリーニングを取りに行く")
-    status: Literal["todo", "doing", "done"] = Field(None, description="現在の状態")
+    status: Literal['done', 'todo', 'doing'] = Field('todo', example='todo')
     class Config:
-        orm_mode = True
+        from_attriubtes = True
     
-class TaskCreate(BaseModel):
-    title: str = Field(None, example="クリーニング")
-    description: Optional[str] = Field(None, example="クリーニングを取りに行く")
+class Task(TaskBase):
+    id: int
+    status: Literal['done', 'todo', 'doing'] = Field('todo', example='todo')
+    class Config:
+        from_attriubtes = True
+        
+class TaskCreate(TaskBase):
     # statusはtodoからスタート
     class Config:
-        orm_mode = True
+        from_attriubtes = True
+        
+        
+
