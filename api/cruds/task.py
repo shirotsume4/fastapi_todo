@@ -18,7 +18,10 @@ def get_tasks(db):
     return db.query(task_model.Task).all()
 
 def get_task(db, task_id: int):
-    return db.query(task_model.Task).filter(task_model.Task.id == task_id).first()
+    if not db.query(task_model.Task).filter(task_model.Task.id == task_id).first():
+        raise HTTPException(status_code=404, detail="Task not found")
+    else:
+        return db.query(task_model.Task).filter(task_model.Task.id == task_id).first()
 
 def update_task_status(db, task_id: int, status: str):
     raise HTTPException(status_code=501, detail="Not implemented")
