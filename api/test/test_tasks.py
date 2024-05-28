@@ -24,7 +24,7 @@ def temp_db(f):
     return func
 
 @temp_db
-def test_create_user():
+def test_create_task():
     response = client.post(
         "/tasks", json={"title": "test", "description": "test", "status": "todo"}
     )
