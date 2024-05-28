@@ -1,8 +1,10 @@
-
 from starlette.testclient import TestClient
 from api.main import app
 from api.db import get_db
+
 client = TestClient(app)
+
+
 def temp_db(f):
     def func(SessionLocal, *args, **kwargs):
         # テスト用のDBに接続するためのsessionmaker instanse
@@ -21,7 +23,9 @@ def temp_db(f):
         f(*args, **kwargs)
         # get_dbを元に戻す
         app.dependency_overrides[get_db] = get_db
+
     return func
+
 
 @temp_db
 def test_create_task():
